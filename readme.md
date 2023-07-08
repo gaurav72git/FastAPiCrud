@@ -14,10 +14,10 @@
 <h2>To activate python vitrual enviornment </h2>
 <p>"source venv/bin/activate"</p>
 
-<h2>To install fastapi and uvicorn<h2>
+<h2>To install fastapi and uvicorn</h2>
 <p>"pip3 install fastapi uvicorn"</p>
 
-<h2>to install sqlalchemy so that we can manage/ access sql database postgresql <h2>
+<h2>to install sqlalchemy so that we can manage/ access sql database postgresql </h2>
 <p>"pip3 install sqlalchemy"</p>
 
 <h2>To install postgres library </h2>
