@@ -4,7 +4,6 @@ from app import models, schemas
 from sqlalchemy.orm import Session
 from fastapi import Depends, HTTPException, Request, status, APIRouter, Response
 from database import get_db
-from app import manager
 from app.models import _source_
 
 router = APIRouter()
@@ -18,7 +17,7 @@ def add_data(_source: schemas.SourceSchema ,source: str, source_tag: str, source
     _source.source_type = source_type
     _source.from_date = from_date
     _source.to_date = to_date
-    _source.last_update_date = last_update_date
+    _source.last_update_date = datetime.now()
     _source.frequencey = str(datetime.timestamp(to_date) - datetime.timestamp(from_date))
 
     db.add(_source)
