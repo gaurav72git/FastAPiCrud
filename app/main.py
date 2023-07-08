@@ -2,6 +2,6 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
-@app.get('/api/healthchecker')
+@app.get('/')
 def root():
     return {'message': 'Hellow WOrld!'}

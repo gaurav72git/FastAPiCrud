@@ -1,0 +1,10 @@
+{
+    "source_id": "uuid string",
+    "source": "source_name",
+    "source_type": "source_type",
+    "source_tag": "source_tag",
+    "last_update_date": "datetime.now()",
+    "from_date": "datetime.now()",
+    "to_date": "datetime.now()",
+    "frequencey": "string"
+}

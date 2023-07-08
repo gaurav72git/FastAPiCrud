@@ -14,3 +14,5 @@ class Source(Base):
     from_date = Column(TIMESTAMP(timezone=True))
     to_date = Column(TIMESTAMP(timezone=True))
     frequencey = Column(String)
+
+_source_ = Source()
