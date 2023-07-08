@@ -42,6 +42,20 @@ def get_an_item(source_id:int):
 @app.post('/add_data',response_model=Source,
         status_code=status.HTTP_201_CREATED)
 def create_an_item(_source:Source):
+    """
+    This Method is used to Create the New Source.
+    example: 
+    {
+        "source_id": 2,
+        "source": "flipkart",
+        "source_type": "COD",
+        "source_tag": "FK",
+        "last_update_date": "2023-07-08 12:53",
+        "from_date": "2023-07-08 12:59",
+        "to_date": "2023-07-08 01:10",
+        "frequency": "5M"
+    }
+    """
     db_source=db.query(models.Source).filter(models.Source.source==_source.source).first()
 
     if db_source is not None:
@@ -80,7 +94,17 @@ def create_an_item(_source:Source):
 
 @app.put('/update_data/{source_id}',response_model=Source,status_code=status.HTTP_200_OK)
 def update_an_item(source_id:int,_source:Source):
+    """
+    This Method is useful for updating the existing data.
+    param1: source_id
+    param2: from_date
+    param3: to_date
+    param4: last_update_date
+    """
     update_source=db.query(models.Source).filter(models.Source.source_id==source_id).first()
+    if update_source is not None:
+        raise HTTPException(status_code=400,detail="Source does not exists")
+    
     update_source.from_date=_source.from_date
     update_source.to_date=_source.to_date
     update_source.last_update_date=_source.last_update_date
@@ -91,6 +115,12 @@ def update_an_item(source_id:int,_source:Source):
 
 @app.get('/get_data_trigger/{source_id}',response_model=Source,status_code=status.HTTP_200_OK)
 def get_data_triggered(source_id: int, _source: Source):
+    """
+    This Method is used to update from_date & To_date
+    param1: source_id {for the source which you want to update from_date and to_date}
+    param2: from_date
+    param3: to_date
+    """
     __source = db.query(models.Source).filter(models.Source.source_id == source_id).first()
     __source.from_date = _source.from_date + _source.frequency
     __source.to_date = _source.to_date + _source.frequency
