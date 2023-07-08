@@ -28,7 +28,7 @@ db=SessionLocal()
 
 
 @app.get('/get_data/{source_id}',response_model=Source,status_code=status.HTTP_200_OK)
-def get_an_item(source_id:int):
+def get_source(source_id:int):
     """
     This Method will provide the source corrosponding to the 
     source_id.
@@ -41,7 +41,7 @@ def get_an_item(source_id:int):
 
 @app.post('/add_data',response_model=Source,
         status_code=status.HTTP_201_CREATED)
-def create_an_item(_source:Source):
+def create_source(_source:Source):
     """
     This Method is used to Create the New Source.
     example: 
@@ -93,7 +93,7 @@ def create_an_item(_source:Source):
     return response
 
 @app.put('/update_data/{source_id}',response_model=Source,status_code=status.HTTP_200_OK)
-def update_an_item(source_id:int,_source:Source):
+def update_source(source_id:int,_source:Source):
     """
     This Method is useful for updating the existing data.
     param1: source_id
@@ -103,7 +103,7 @@ def update_an_item(source_id:int,_source:Source):
     """
     update_source=db.query(models.Source).filter(models.Source.source_id==source_id).first()
     if update_source is not None:
-        raise HTTPException(status_code=400,detail="Source does not exists")
+        raise HTTPException(status_code=404,detail="Source does not exists")
     
     update_source.from_date=_source.from_date
     update_source.to_date=_source.to_date
@@ -122,6 +122,10 @@ def get_data_triggered(source_id: int, _source: Source):
     param3: to_date
     """
     __source = db.query(models.Source).filter(models.Source.source_id == source_id).first()
+
+    if __source is None:
+        raise HTTPException(status_code=404, detail="Source does not exists for corrosponding {source_id}")
+
     __source.from_date = _source.from_date + _source.frequency
     __source.to_date = _source.to_date + _source.frequency
 
